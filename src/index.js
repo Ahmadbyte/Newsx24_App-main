@@ -68,18 +68,22 @@ searchBtn.addEventListener("click", function() {
 
 // Function to fetch headlines
 const fetchHeadlines = async () => {
-    const response = await fetch(HEADLINES_NEWS + API_KEY);
-    newsDataArr = [];
-    if (response.status >= 200 && response.status < 300) {
-        const myJson = await response.json();
-        newsDataArr = myJson.articles;
-    } else {
-        console.log(response.status, response.statusText);
-        newsdetails.innerHTML = "<h5>No data found.</h5>"
-        return;
+    try {
+        const response = await fetch(HEADLINES_NEWS + API_KEY);
+        if (response.ok) {
+            const myJson = await response.json();
+            newsDataArr = myJson.articles;
+            displayNews();
+        } else {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            newsdetails.innerHTML = "<h5>No data found.</h5>";
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
+        newsdetails.innerHTML = "<h5>No data found.</h5>";
     }
-    displayNews();
 }
+
 
 // Function to fetch general news
 const fetchGeneralNews = async () => {
