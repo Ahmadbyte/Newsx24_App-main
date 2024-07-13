@@ -176,7 +176,7 @@ const fetchQueryNews = async () => {
 // Function to display news
 function displayNews() {
     newsdetails.innerHTML = "";
-    if (newsDataArr.length == 0) {
+    if (newsDataArr.length === 0) {
         newsdetails.innerHTML = "<h5>No data found.</h5>"
         return;
     }
